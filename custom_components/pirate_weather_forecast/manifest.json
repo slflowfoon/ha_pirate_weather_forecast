@@ -1,9 +1,9 @@
 {
-  "domain": "accuweather_forecast",
-  "name": "AccuWeather Daily Forecast",
+  "domain": "pirate_weather_forecast",
+  "name": "Pirate Weather Daily Forecast",
   "config_flow": true,
-  "documentation": "https://github.com/slflowfoon/accuweather_forecast",
-  "issue_tracker": "https://github.com/slflowfoon/accuweather_forecast/issues",
+  "documentation": "https://github.com/slflowfoon/ha_pirate_weather_forecast",
+  "issue_tracker": "https://github.com/slflowfoon/ha_pirate_weather_forecast/issues",
   "iot_class": "cloud_polling",
   "version": "1.0.0",
   "codeowners": [],
