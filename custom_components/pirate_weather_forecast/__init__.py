@@ -1,24 +1,24 @@
-"""The AccuWeather Daily Forecast integration."""
+"""The Pirate Weather Daily Forecast integration."""
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_API_KEY, Platform
+from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, Platform
 from homeassistant.core import HomeAssistant
 
-from .const import DOMAIN, CONF_LOCATION_KEY
-from .coordinator import AccuWeatherForecastCoordinator
+from .const import DOMAIN
+from .coordinator import PirateWeatherForecastCoordinator
 
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up AccuWeather Daily Forecast from a config entry."""
+    """Set up Pirate Weather Daily Forecast from a config entry."""
     hass.data.setdefault(DOMAIN, {})
 
     api_key = entry.data[CONF_API_KEY]
-    location_key = entry.data[CONF_LOCATION_KEY]
+    latitude = entry.data[CONF_LATITUDE]
+    longitude = entry.data[CONF_LONGITUDE]
 
-    coordinator = AccuWeatherForecastCoordinator(hass, api_key, location_key)
+    coordinator = PirateWeatherForecastCoordinator(hass, api_key, latitude, longitude)
 
-    # Fetch initial data so we have it when entities are set up
     await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
