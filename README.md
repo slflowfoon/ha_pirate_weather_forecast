@@ -8,8 +8,8 @@
 <img src=https://img.shields.io/badge/HACS-Default-orange.svg>
 <img src="https://img.shields.io/maintenance/yes/2025.svg">
 <img src=https://img.shields.io/badge/version-1.0.0-blue>
-<img alt="Issues" src="https://img.shields.io/github/issues/slflowfoon/accuweather_longphrase?color=0088ff">
+<img alt="Issues" src="https://img.shields.io/github/issues/slflowfoon/ha_pirate_weather_forecast?color=0088ff">
     <p align=center style="font-weight:bold">
-      Imports "LongPhrase" and "Maximum Real Feel Temperature" stats from Accuweather to Home Assistant
+      Imports stats from Pirate Weather to Home Assistant
     </p>
 </p>
