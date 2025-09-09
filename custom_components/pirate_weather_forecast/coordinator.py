@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for the AccuWeather Daily Forecast integration."""
+"""DataUpdateCoordinator for the Pirate Weather Daily Forecast integration."""
 import logging
 from async_timeout import timeout
 
@@ -10,13 +10,14 @@ from .const import DOMAIN, API_ENDPOINT, UPDATE_INTERVAL
 _LOGGER = logging.getLogger(__name__)
 
 
-class AccuWeatherForecastCoordinator(DataUpdateCoordinator):
-    """Class to manage fetching AccuWeather data."""
+class PirateWeatherForecastCoordinator(DataUpdateCoordinator):
+    """Class to manage fetching Pirate Weather data."""
 
-    def __init__(self, hass, api_key: str, location_key: str):
+    def __init__(self, hass, api_key: str, latitude: float, longitude: float):
         """Initialize the data coordinator."""
         self.api_key = api_key
-        self.location_key = location_key
+        self.latitude = latitude
+        self.longitude = longitude
         self.session = async_get_clientsession(hass)
         
         super().__init__(
@@ -27,23 +28,20 @@ class AccuWeatherForecastCoordinator(DataUpdateCoordinator):
         )
 
     async def _async_update_data(self):
-        """Fetch data from AccuWeather API."""
-        url = API_ENDPOINT.format(location_key=self.location_key)
-        params = {
-            "apikey": self.api_key,
-            "details": "true",
-            "metric": "true",
-        }
+        """Fetch data from Pirate Weather API."""
+        url = API_ENDPOINT.format(api_key=self.api_key, latitude=self.latitude, longitude=self.longitude)
+        # Use 'si' units for Metric (Celsius)
+        params = { "units": "si" }
         
         try:
-            async with timeout(15):
+            async with timeout(20):
                 response = await self.session.get(url, params=params)
                 if response.status != 200:
                     raise UpdateFailed(f"Error communicating with API: {response.status}")
                 
                 data = await response.json()
-                if not data or "DailyForecasts" not in data or not data["DailyForecasts"]:
-                    raise UpdateFailed("Invalid data received from AccuWeather API")
+                if not data or "daily" not in data or "data" not in data["daily"]:
+                    raise UpdateFailed("Invalid data received from Pirate Weather API")
                 
                 return data
 
